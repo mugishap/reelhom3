@@ -7,6 +7,7 @@ function Home() {
     const [previewSource, setPreviewSource] = useState()
     const [fileInputState, setFileInputState] = useState('')
     const [imageIds, setImageIds] = useState()
+    const [preview, setPreview] = useState()
     const loadImages = async () => {
         try {
             const res = await fetch('http://localhost:4040/api/images')
@@ -32,26 +33,32 @@ function Home() {
         }
     }
     const handleSubmitFile = (e) => {
+        console.log("Submitting")
         e.preventDefault()
         if (!previewSource) return;
         uploadImage(previewSource)
+        console.log("Valid File entered uploading")
     }
     const uploadImage = async (base64EncodedImage) => {
         // console.log(base64EncodedImage);
         try {
-            await fetch('http://localhost:4040/api/upload', {
+            let upload = await fetch('http://localhost:4040/api/upload', {
                 method: 'POST',
                 body: JSON.stringify({ data: base64EncodedImage }),
                 headers: {
                     'Content-Type': 'application/json'
                 }
             })
+            if (upload.status === 200 && upload.statusText === "OK") {
+                console.log("Wow image uploaded");
+                setPreview()
+            }
         } catch (error) {
             console.error(error)
         }
     }
     return (
-        <div>
+        <div className='main'>
             <form onSubmit={handleSubmitFile}>
                 <div>
                     <label>Select file</label>
@@ -61,18 +68,25 @@ function Home() {
                     <button type={'submit'} >Submit</button>
                 </div>
             </form>
-            {previewSource && (
-                <img src={previewSource} style={{ height: '300px' }} alt={'chosen'} />
-            )}
+            <div className='preview'>
+                {previewSource && (
+                    <img src={previewSource} style={{ height: '300px' }} alt={'chosen'} />
+                )}
+            </div>
             <div>
-                {imageIds && imageIds.map((imageId, index) => (
-                    <Image
-                        key={index}
-                        cloudName='precieux'
-                        publicId={imageId}
-                        width="300"
-                        crop="scale"
-                    />
+                {imageIds && imageIds.reverse().map((imageId, index) => (
+                    <div className='images'>
+                        <div><p>Precieux</p></div>
+                        <Image
+                            key={index}
+                            cloudName='precieux'
+                            publicId={imageId}
+                            width="300"
+                            crop="scale"
+                        />
+                        <div><p>This is a caption by the way</p></div>
+                        <hr />
+                    </div>
                 ))}
             </div>
 
