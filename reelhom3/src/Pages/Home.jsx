@@ -2,7 +2,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import { video, Video } from 'cloudinary-react'
-import "./Home.css"
 function Home() {
     const [previewSource, setPreviewSource] = useState()
     const [fileInputState, setFileInputState] = useState('')
