@@ -7,9 +7,11 @@ import Navbar from './../Components/Navbar'
 import Post from './../Components/Post'
 import { Link } from 'react-router-dom'
 import Suggestion from '../Components/Suggestion'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
-function Home() {
+function Home(props) {
     const [showPostForm, setShowPostForm] = useState(false);
     const getPosts = () => {
 
@@ -112,7 +114,15 @@ function CreatePostPopup({ setShowPostForm }) {
     const handleFileChange = (e) => {
         const file = e.target.files[0];
         if (file.size > 10000000) {
-            alert("Video must be less than 10MB");
+            toast.error("Video must be less than 10MB", {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                });
             e.target.value = "";
         }
         else {
@@ -132,6 +142,17 @@ function CreatePostPopup({ setShowPostForm }) {
     }
     return (
         <div className={`flex z-[3] items-center justify-center absolute w-screen h-screen bg-black/70`}>
+            <ToastContainer
+                position="bottom-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+            />
             <div className='bg-transparent h-full w-full absolute top-0 left-0 z-[5]' onClick={() => setShowPostForm(false)}></div>
             <div className='bg-white z-[10] w-1/2 h-4/5 rounded-lg text-black flex items-center justify-center'>
                 <div onDrag={dragEvent} onDragEnd={dropEvent} className='flex flex-col items-center rounded-lg justify-center w-1/2 h-full' style={{ 'border': '3px dashed grey' }}>
