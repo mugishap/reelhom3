@@ -1,11 +1,9 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from 'react'
-import { Image } from 'cloudinary-react'
-import Home from './Pages/Home'
+import Pages from './Pages'
 function App() {
     return (
         <div>
-            <Home />
+            <Pages />
         </div>
     )
 }
