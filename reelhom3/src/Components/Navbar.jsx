@@ -25,7 +25,7 @@ function Navbar(props) {
         <button onClick={() => setShowPostForm(true)} className='flex items-center w-full xl:w-1/2 whitespace-nowrap  justify-center bg-pink-600 text-white px-2 py-1 m-1 rounded-lg'><MdOutlineVideoLibrary />Add video</button>
         <button className='flex items-center justify-center bg-pink-600 w-full xl:w-1/2 whitespace-nowrap text-white px-2 py-1 m-1 rounded-lg'><MdOutlineVideoLibrary />Create video</button>
       </div>
-      <div className="items-center justify-around flex mb-4 bg-white rounded-lg my-2 h-24 sm:flex md:flex xl:flex p-3">
+      <div className="items-center justify-around flex sm:flex md:flex xl:flex p-3">
         <img src="https://i.ytimg.com/an_webp/ec6yCWX9LGs/mqdefault_6s.webp?du=3000&sqp=CPO2uZYG&rs=AOn4CLDPH3cjPFLObtjfOmu1uDlNVGqNcg" className='rounded-full h-16 w-16' alt="" />
       </div>
       {

@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom'
 import Suggestion from '../Components/Suggestion'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Comments from '../Components/Comments'
 
 function Home(props) {
     const [showPostForm, setShowPostForm] = useState(false);
@@ -111,7 +112,7 @@ export function CreatePostPopup({ setShowPostForm }) {
                 pauseOnHover: true,
                 draggable: true,
                 progress: undefined,
-                });
+            });
             e.target.value = "";
         }
         else {
@@ -176,3 +177,26 @@ export function CreatePostPopup({ setShowPostForm }) {
 }
 
 
+export function postPopUp({ post, setShowPost }) {
+    return (
+        <div className='absolute w-screen h-screen bg-black/70 flex items-center justify-center'>
+            <div className='w-3/5 rounded p-3 h-2/3 flex items-center justify-center bg-white'>
+                <div className='w-1/2 h-full flex items-center justify-center flex-col'>
+                    <div className='p-2 relative  z-[4] flex items-center justify-center flex-col rounded w-full h-full'>
+                        <div className='mb-3 w-full flex items-center justify-start'>
+                            <img className='rounded-full h-12 w-12 object-cover' src="https://i.ytimg.com/an_webp/ec6yCWX9LGs/mqdefault_6s.webp?du=3000&sqp=CPO2uZYG&rs=AOn4CLDPH3cjPFLObtjfOmu1uDlNVGqNcg" alt="" />
+                            <p className='pl-1'>precieux23</p>
+                        </div>
+                        <video className='w-full h-[45vh] rounded-lg' autoPlay={true} controls src={formData.videoStr}></video>
+                        <p className='mt-3 h-48 w-full whitespace-wrap'>{formData.caption}</p>
+                    </div>
+                </div>
+                <div className='w-1/2 h-full flex items-center justify-center'>
+                    <div className="comments flex flex-col items-center justify-center">
+                        <Comments user={user} comment={"comment"} />
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+}
