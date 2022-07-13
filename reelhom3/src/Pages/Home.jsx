@@ -10,7 +10,6 @@ import Suggestion from '../Components/Suggestion'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-
 function Home(props) {
     const [showPostForm, setShowPostForm] = useState(false);
     const getPosts = () => {
@@ -43,15 +42,6 @@ function Home(props) {
                     </div>
                 </div>
                 <div className="home-sections mx-2 mt-3 items-center justify-start flex-col w-4/12  rounded-lg py-4 sm:flex md:flex xl:flex" style={{ 'height': '98%' }}>
-                    <div className="new-post-sections items-center justify-around flex w-11/12 mb-4 bg-white rounded-lg my-2 h-24 sm:flex md:flex xl:flex p-3">
-                        <img src="https://i.ytimg.com/an_webp/ec6yCWX9LGs/mqdefault_6s.webp?du=3000&sqp=CPO2uZYG&rs=AOn4CLDPH3cjPFLObtjfOmu1uDlNVGqNcg" className='rounded-full h-16 w-16' alt="" />
-                        <div className="flex items-center w-3/5 flex-col justify-center">
-                            <div className='h-2/5 flex flex-col xl:flex-row items-center justify-center w-full'>
-                                <button onClick={() => setShowPostForm(true)} className='flex items-center w-full xl:w-1/2 whitespace-nowrap  justify-center bg-pink-600 text-white px-2 py-1 m-1 rounded-lg'><MdOutlineVideoLibrary />Add video</button>
-                                <button className='flex items-center justify-center bg-pink-600 w-full xl:w-1/2 whitespace-nowrap text-white px-2 py-1 m-1 rounded-lg'><MdOutlineVideoLibrary />Create video</button>
-                            </div>
-                        </div>
-                    </div>
                     <div className='w-full flex items-center justify-around'>
                         <h1 className='text-xl my-3'>Recent reels</h1>
                         <button className='flex items-center justify-center text-white bg-pink-600 rounded py-1 px-4'><HiSortDescending />Sort</button>
@@ -85,8 +75,7 @@ function Home(props) {
 export default Home
 
 
-
-function CreatePostPopup({ setShowPostForm }) {
+export function CreatePostPopup({ setShowPostForm }) {
 
     const [formData, setFormData] = useState({
         videoStr: "",
@@ -141,7 +130,7 @@ function CreatePostPopup({ setShowPostForm }) {
         e.target.style.backgroundColor = "white";
     }
     return (
-        <div className={`flex z-[3] items-center justify-center absolute w-screen h-screen bg-black/70`}>
+        <div className={`flex z-[3] items-center justify-center absolute top-0 left-0 w-screen h-screen bg-black/70`}>
             <ToastContainer
                 position="bottom-right"
                 autoClose={5000}
@@ -185,4 +174,5 @@ function CreatePostPopup({ setShowPostForm }) {
         </div>
     )
 }
+
 

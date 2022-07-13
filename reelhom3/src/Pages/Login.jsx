@@ -79,9 +79,9 @@ function Login(props) {
               />
             </FormControl>
           </div>
-          <Button className='text-white rounded-sm px-2 py-1' color='#5c5858'  type='submit' variant="contained" size="medium">
+          <button className='text-white rounded-sm px-4 cursor-pointer py-1 bg-[#d52777]'  type='submit'>
           Submit
-        </Button>
+        </button>
         </form>
         <p className='my-3 text-lg'>
           Don't have an account? <Link to='/signup' className='hover:text-pink-600'>Sign Up</Link>
