@@ -30,3 +30,8 @@
     background: #444;
 
   }
+
+  input[placeholder='Search....']:focus{
+    border:none;
+    outline:none;
+  }
