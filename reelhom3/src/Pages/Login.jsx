@@ -12,6 +12,7 @@ import TextField from '@mui/material/TextField';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import Input from '@mui/material/Input';
 import { RiLockPasswordFill } from 'react-icons/ri'
+import Button from '@mui/material/Button';
 
 function Login(props) {
 
@@ -78,6 +79,9 @@ function Login(props) {
               />
             </FormControl>
           </div>
+          <Button className='text-white rounded-sm px-2 py-1' color='#5c5858'  type='submit' variant="contained" size="medium">
+          Submit
+        </Button>
         </form>
         <p className='my-3 text-lg'>
           Don't have an account? <Link to='/signup' className='hover:text-pink-600'>Sign Up</Link>
