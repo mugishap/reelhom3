@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { MdOutlineVideoLibrary } from 'react-icons/md'
 import { AiOutlineVideoCameraAdd, AiOutlineCloseCircle } from 'react-icons/ai'
 import { BiUpload } from 'react-icons/bi'
 import { HiSortDescending } from 'react-icons/hi'
@@ -187,13 +186,13 @@ export function postPopUp({ post, setShowPost }) {
                             <img className='rounded-full h-12 w-12 object-cover' src="https://i.ytimg.com/an_webp/ec6yCWX9LGs/mqdefault_6s.webp?du=3000&sqp=CPO2uZYG&rs=AOn4CLDPH3cjPFLObtjfOmu1uDlNVGqNcg" alt="" />
                             <p className='pl-1'>precieux23</p>
                         </div>
-                        <video className='w-full h-[45vh] rounded-lg' autoPlay={true} controls src={formData.videoStr}></video>
-                        <p className='mt-3 h-48 w-full whitespace-wrap'>{formData.caption}</p>
+                        <video className='w-full h-[45vh] rounded-lg' autoPlay={true} controls src={post.videoStr}></video>
+                        <p className='mt-3 h-48 w-full whitespace-wrap'>{post.caption}</p>
                     </div>
                 </div>
                 <div className='w-1/2 h-full flex items-center justify-center'>
                     <div className="comments flex flex-col items-center justify-center">
-                        <Comments user={user} comment={"comment"} />
+                        <Comments user={post} comment={"comment"} />
                     </div>
                 </div>
             </div>

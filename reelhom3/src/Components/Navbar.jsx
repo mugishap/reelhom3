@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { BsSearch } from 'react-icons/bs'
 import { MdOutlineWbSunny, MdDarkMode, MdOutlineVideoLibrary } from 'react-icons/md'
 import { CreatePostPopup } from '../Pages/Home';
+import { changeMode } from '../Utils/themes';
 
 function Navbar(props) {
   const [search, setSearch] = useState('')
@@ -26,10 +27,10 @@ function Navbar(props) {
         <button className='flex items-center justify-center bg-pink-600 w-full xl:w-1/2 whitespace-nowrap text-white px-2 py-1 m-1 rounded-lg'><MdOutlineVideoLibrary />Create video</button>
       </div>
       <div className="items-center justify-around flex sm:flex md:flex xl:flex p-3">
-        <img src="https://i.ytimg.com/an_webp/ec6yCWX9LGs/mqdefault_6s.webp?du=3000&sqp=CPO2uZYG&rs=AOn4CLDPH3cjPFLObtjfOmu1uDlNVGqNcg" className='rounded-full h-16 w-16' alt="" />
+        <img src="https://i.ytimg.com/an_webp/ec6yCWX9LGs/mqdefault_6s.webp?du=3000&sqp=CPO2uZYG&rs=AOn4CLDPH3cjPFLObtjfOmu1uDlNVGqNcg" className='rounded-full h-12 w-12' alt="" />
       </div>
       {
-        props.mode === 'dark' ? <MdOutlineWbSunny /> : <MdDarkMode />
+        props.mode === 'dark' ? <MdOutlineWbSunny onClick={changeMode} size={30} color='#db2777' /> : <MdDarkMode size={30} color='#db2777' onClick={changeMode} />
       }
     </div>
   )

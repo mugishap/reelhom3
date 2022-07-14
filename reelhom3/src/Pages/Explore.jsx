@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom'
 import Suggestion from '../Components/Suggestion'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { CreatePostPopup } from './Home'
 
 
 function Explore(props) {
@@ -83,105 +84,4 @@ function Explore(props) {
 }
 
 export default Explore
-
-
-function CreatePostPopup({ setShowPostForm }) {
-
-  const [formData, setFormData] = useState({
-    videoStr: "",
-    caption: ""
-  })
-
-  const handleSubmitForm = () => {
-
-  }
-  const previewFile = (base64VideoString) => {
-    setFormData({ ...formData, videoStr: base64VideoString })
-    document.getElementById("videoPreview").src = base64VideoString
-  }
-
-  const dragEvent = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (e.type === "dragover") {
-      e.target.style.backgroundColor = "rgba(255,255,255,0.5)";
-    } else {
-      e.target.style.backgroundColor = "white";
-    }
-  }
-
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file.size > 10000000) {
-      toast.error("Video must be less than 10MB", {
-        position: "bottom-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
-      e.target.value = "";
-    }
-    else {
-      const reader = new FileReader();
-      reader.onloadend = (e) => {
-        setFormData({ ...formData, videoStr: reader.result })
-        console.log(reader.result)
-        previewFile(reader.result);
-      }
-      reader.readAsDataURL(file);
-    }
-  }
-  const dropEvent = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    e.target.style.backgroundColor = "white";
-  }
-  return (
-    <div className={`flex z-[3] items-center justify-center absolute w-screen h-screen bg-black/70`}>
-      <ToastContainer
-        position="bottom-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
-      <div className='bg-transparent h-full w-full absolute top-0 left-0 z-[5]' onClick={() => setShowPostForm(false)}></div>
-      <div className='bg-white z-[10] w-1/2 h-4/5 rounded-lg text-black flex items-center justify-center'>
-        <div onDrag={dragEvent} onDragEnd={dropEvent} className='flex flex-col items-center rounded-lg justify-center w-1/2 h-full' style={{ 'border': '3px dashed grey' }}>
-          {(formData.videoStr || formData.caption) ?
-            (<div className='p-2 relative  z-[4] flex items-center justify-center flex-col rounded w-full h-full'>
-              <div className='mb-3 w-full flex items-center justify-start'>
-                <img className='rounded-full h-12 w-12' src="https://i.ytimg.com/an_webp/ec6yCWX9LGs/mqdefault_6s.webp?du=3000&sqp=CPO2uZYG&rs=AOn4CLDPH3cjPFLObtjfOmu1uDlNVGqNcg" alt="" />
-                <p className='pl-1'>precieux23</p>
-              </div>
-              <video className='w-full h-[45vh] rounded-lg' autoPlay={true} controls src={formData.videoStr}></video>
-              <p className='mt-3 h-48 w-full whitespace-wrap'>{formData.caption}</p>
-            </div>)
-            :
-            <label htmlFor="video_to_post" className='relative z-[3] w-full flex-col h-full flex items-center justify-center'>
-              <AiOutlineVideoCameraAdd size={70} color={'#5c5858'} />
-              <p>Click to add a video here or drag it here</p>
-            </label>
-          }
-        </div>
-        <div className='w-1/2 h-full flex  justify-start pt-12 flex-col items-center'>
-          <span className='relative top-0  right-0 text-white float-right mb-24 cursor-pointer' onClick={(e) => { setShowPostForm(false) }}><AiOutlineCloseCircle color='black' size={30} /></span>
-          <h2 className='text-xl font-bold'>Create New Post</h2>
-          <form onSubmit={handleSubmitForm} className='flex flex-col items-center justify-center w-full'>
-            <textarea maxLength={500} className='rounded-lg border-2 w-4/5 border-black h-48 my-3 p-3' placeholder='Type something' type="text" onChange={(e) => { setFormData({ ...FormData, caption: e.target.value }) }}></textarea>
-            <label htmlFor="video_to_post" className='flex items-center justify-center bg-pink-600 text-white rounded-lg px-2 py-1'><BiUpload />Upload video</label>
-            <input id='video_to_post' className='hidden' accept='video/mp4,video/x-m4v,video/*' type="file" onChange={handleFileChange} />
-          </form>
-        </div>
-      </div>
-    </div>
-  )
-}
 

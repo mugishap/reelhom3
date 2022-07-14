@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom'
 import IconButton from '@mui/material/IconButton';
-import FilledInput from '@mui/material/FilledInput';
 import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
 import FormControl from '@mui/material/FormControl';
@@ -12,7 +11,6 @@ import TextField from '@mui/material/TextField';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import Input from '@mui/material/Input';
 import { RiLockPasswordFill } from 'react-icons/ri'
-import Button from '@mui/material/Button';
 
 function Login(props) {
 
