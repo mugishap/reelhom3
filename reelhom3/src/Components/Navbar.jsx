@@ -3,6 +3,7 @@ import { BsSearch } from 'react-icons/bs'
 import { MdOutlineWbSunny, MdDarkMode, MdOutlineVideoLibrary } from 'react-icons/md'
 import { CreatePostPopup } from '../Pages/Home';
 import { changeMode } from '../Utils/themes';
+import {Link} from 'react-router-dom'
 
 function Navbar(props) {
   const [search, setSearch] = useState('')
@@ -14,7 +15,7 @@ function Navbar(props) {
   return (
     <div className='flex items-center justify-around absolute bg-white w-full h-16 px-3'>
       {showPostForm ? <CreatePostPopup setShowPostForm={setShowPostForm} /> : null}
-      <span className='text-black flex items-center justify-center text-2xl font-semibold'>Reel<p className='text-pink-600'>home</p></span>
+      <Link to={'/'}><span className='text-black flex items-center justify-center text-2xl font-semibold'>Reel<p className='text-pink-600'>home</p></span></Link>
       <div className='flex items-center justify-center w-1/5'>
         <form onSubmit={searchUser} className='w-full flex items-center justify-center h-full rounded-md p-1 bg-slate-100  border-2 border-gray-300'>
           <input type="text" placeholder='Search....' className='bg-slate-100 w-full' onChange={(e) => { setSearch(e.target.value); }} />
