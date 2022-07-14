@@ -44,7 +44,7 @@ export default function AuthProvider({ children }) {
 }
 
 export const getUserById = async (id) => {
-  const res = await fetch(`https://photocorner33.herokuapp.com/user/getUserByID/${id}`,{
+  const res = await fetch(`http://localhost:5050/user/getUserByID/${id}`,{
     method: "GET",
     headers: {
       "Content-Type": "application/json",

@@ -12,7 +12,7 @@ export const PostProvider = ({ children }) => {
 
 	const getPosts = async () => {
 		const res = await fetch(
-			"https://photocorner33.herokuapp.com/post/allPosts",
+			"http://localhost:5050/post/allPosts",
 			{
 				method: "GET",
 
@@ -32,7 +32,7 @@ export const PostProvider = ({ children }) => {
 
 	const newPost = async (caption, imageStr) => {
 		const res = await fetch(
-			"https://photocorner33.herokuapp.com/post/newPost",
+			"http://localhost:5050/post/newPost",
 			{
 				method: "POST",
 				headers: {
@@ -55,7 +55,7 @@ export const PostProvider = ({ children }) => {
 
 	const deletePost = async (id) => {
 		const res = await fetch(
-			`https://photocorner33.herokuapp.com/post/delete/${id}`,
+			`http://localhost:5050/post/delete/${id}`,
 			{
 				method: "DELETE",
 				headers: {
@@ -74,7 +74,7 @@ export const PostProvider = ({ children }) => {
 
 	const commentOnPost = async (postID, comment) => {
 		const res = await fetch(
-			`https://photocorner33.herokuapp.com/post/commentOnPost/${postID}`,
+			`http://localhost:5050/post/commentOnPost/${postID}`,
 			{
 				method: "POST",
 				headers: {
@@ -94,7 +94,7 @@ export const PostProvider = ({ children }) => {
 
 	const likePost = async (postID) => {
 		const res = await fetch(
-			`https://photocorner33.herokuapp.com/post/like/${postID}`,
+			`http://localhost:5050/post/like/${postID}`,
 			{
 				method: "GET",
 				headers: {
@@ -111,7 +111,7 @@ export const PostProvider = ({ children }) => {
 	const getCommentsByPost = async (postID) => {
 
 		const res = await fetch(
-			`https://photocorner33.herokuapp.com/post/getCommentsByPosts/${postID}`,
+			`http://localhost:5050/post/getCommentsByPosts/${postID}`,
 			{
 				method: "GET",
 				headers: {
@@ -128,7 +128,7 @@ export const PostProvider = ({ children }) => {
 	const getLikesDataByPost = async (postID) => {
 
 		const res = await fetch(
-			`https://photocorner33.herokuapp.com/post/getLikesDataByPost/${postID}`,
+			`http://localhost:5050/post/getLikesDataByPost/${postID}`,
 			{
 				method: "GET",
 				headers: {
@@ -145,7 +145,7 @@ export const PostProvider = ({ children }) => {
 	const getLikesCountByPost = async (postID) => {
 
 		const res = await fetch(
-			`https://photocorner33.herokuapp.com/post/getLikeCountByPost/${postID}`,
+			`http://localhost:5050/post/getLikeCountByPost/${postID}`,
 			{
 				method: "GET",
 				headers: {
@@ -161,7 +161,7 @@ export const PostProvider = ({ children }) => {
 
 	const unlikePost = async (postID) => {
 		const res = await fetch(
-			`https://photocorner33.herokuapp.com/post/unlikePost/${postID}`,
+			`http://localhost:5050/post/unlikePost/${postID}`,
 			{
 				method: "GET",
 				headers: {
@@ -177,7 +177,7 @@ export const PostProvider = ({ children }) => {
 
 	const updateCommentOnPost = async (postID, commentID, comment) => {
 		const res = await fetch(
-			`https://photocorner33.herokuapp.com/post/updateCommentOnPost/${postID}`,
+			`http://localhost:5050/post/updateCommentOnPost/${postID}`,
 			{
 				method: "PUT",
 				headers: {
@@ -197,7 +197,7 @@ export const PostProvider = ({ children }) => {
 
 	const updatePost = async (postID, imageStr, caption) => {
 		const res = await fetch(
-			`https://photocorner33.herokuapp.com/post/updatePost/${postID}`,
+			`http://localhost:5050/post/updatePost/${postID}`,
 			{
 				method: "PATCH",
 				headers: {
@@ -218,7 +218,7 @@ export const PostProvider = ({ children }) => {
 
 	const getPostsByFollowing = async () => {
 		const res = await fetch(
-			`https://photocorner33.herokuapp.com/post/getPostsByFollowing`,
+			`http://localhost:5050/post/getPostsByFollowing`,
 			{
 				method: "GET",
 				headers: {
@@ -235,7 +235,7 @@ export const PostProvider = ({ children }) => {
 
 	const getAllPostDataById = async (postID) => {
 		const res = await fetch(
-			`https://photocorner33.herokuapp.com/post/getAllPostData/${postID}`, {
+			`http://localhost:5050/post/getAllPostData/${postID}`, {
 			method: "GET",
 			headers: {
 				"Content-Type": "application/json",
@@ -249,7 +249,7 @@ export const PostProvider = ({ children }) => {
 
 	const deleteComment = async (postID, commentID) => {
 		const res = await fetch(
-			`https://photocorner33.herokuapp.com/post/deleteComment/${postID}`,
+			`http://localhost:5050/post/deleteComment/${postID}`,
 			{
 				method: "DELETE",
 				headers: {
