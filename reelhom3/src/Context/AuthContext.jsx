@@ -1,6 +1,6 @@
 import React from 'react'
 import jwtdecode from 'jwt-decode'
-import { deleteAllCookies, getCookie } from './RequireAuth';
+import {  getCookie } from './RequireAuth';
 
 let AuthContext = React.createContext();
 
