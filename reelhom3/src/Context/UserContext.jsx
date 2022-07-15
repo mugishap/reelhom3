@@ -242,7 +242,8 @@ export const UserProvider = ({ children }) => {
       },
     })
     const data = await res.json();
-    return data;
+    setUsers(data.users)
+    return users;
   }
   const searchUser = async (searchQuery) => {
     const res = await fetch(`${baseURL}/user/search/${searchQuery}`, {

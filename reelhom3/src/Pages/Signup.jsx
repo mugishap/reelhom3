@@ -15,7 +15,6 @@ import { ToastContainer,toast } from 'react-toastify';
 
 function Signup(props) {
   const { newUser } = useUsers()
-console.log(useUsers());
   const [formData, setFormData] = useState({
     fullname: "",
     username: "",
@@ -24,7 +23,8 @@ console.log(useUsers());
     showPassword: false
   })
 
-  const handleSubmitForm = async () => {
+  const handleSubmitForm = async (e) => {
+    e.preventDefault()
     const data = await newUser({ fullname: formData.fullname, username: formData.username, email: formData.email, password: formData.password })
     if (data.message !== 'Account created') {
       toast.error(data.message, {
