@@ -10,9 +10,14 @@ export const usePosts = () => {
 export const PostProvider = ({ children }) => {
 	const [posts, setPosts] = useState([]);
 
-	const getPosts = async () => {
+
+	const baseURL = 'http://localhost:5050'
+	// const baseURL = 'reelhome-backend.herokuapp.com'
+
+
+	const allPosts = async () => {
 		const res = await fetch(
-			"${baseURL}/post/allPosts",
+			`${baseURL}/post/allPosts`,
 			{
 				method: "GET",
 
@@ -26,13 +31,12 @@ export const PostProvider = ({ children }) => {
 		console.log(res);
 		setPosts(posts.posts.reverse());
 		console.log(posts);
-		setLoader(false);
 		return posts;
 	};
 
 	const newPost = async (caption, imageStr) => {
 		const res = await fetch(
-			"${baseURL}/post/newPost",
+			`${baseURL}/post/newPost`,
 			{
 				method: "POST",
 				headers: {
@@ -49,7 +53,6 @@ export const PostProvider = ({ children }) => {
 		console.log(res);
 		setPosts(data.posts.reverse());
 		console.log(posts);
-		setLoader(false);
 		return posts;
 	}
 
@@ -68,7 +71,6 @@ export const PostProvider = ({ children }) => {
 		console.log(res);
 		setPosts(data.posts.reverse());
 		console.log(posts);
-		setLoader(false);
 		return posts;
 	}
 
@@ -267,12 +269,14 @@ export const PostProvider = ({ children }) => {
 	}
 
 	useEffect(() => {
-		getPosts();
+		allPosts();
 	}, []);
 
 	return (
-		<PostContext.Provider value={{ posts, setPosts, getPosts, newPost, deletePost, deleteComment, commentOnPost, likePost, getAllPostDataById, getCommentsByPost,
-		 getLikesDataByPost,  getLikesCountByPost, unlikePost, updateCommentOnPost, updatePost, getPostsByFollowing}}>
+		<PostContext.Provider value={{
+			posts, setPosts, allPosts, newPost, deletePost, deleteComment, commentOnPost, likePost, getAllPostDataById, getCommentsByPost,
+			getLikesDataByPost, getLikesCountByPost, unlikePost, updateCommentOnPost, updatePost, getPostsByFollowing
+		}}>
 			{children}
 		</PostContext.Provider>
 	);

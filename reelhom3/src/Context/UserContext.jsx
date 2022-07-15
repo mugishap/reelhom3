@@ -59,7 +59,7 @@ export const UserProvider = ({ children }) => {
     return data;
   }
   const getSuggestions = async () => {
-    const res = await fetch(`${baseURL}/user/suggestions`, {
+    const res = await fetch(`${baseURL}/user/suggestedUsers`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
