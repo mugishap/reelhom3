@@ -9,16 +9,25 @@ import Suggestion from '../Components/Suggestion'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Comments from '../Components/Comments'
+import { getUserById } from '../Context/AuthContext'
+import { getCookie } from '../Context/RequireAuth'
+import {}
 
 function Home(props) {
     const [showPostForm, setShowPostForm] = useState(false);
-    const getPosts = () => {
-
+    const [user, setUser] = useState({})
+    const [posts,setPosts] = useState([])
+    useEffect(async() => {
+        const data = await getUserById(getCookie('userID'))
+        setUser(data)
+    }, [])
+    const getPosts = async() => {
+const data = await
     }
     useEffect(() => {
         getPosts()
     }, [])
-    const user = { userid: "123", _id: "Fsafdfd", profile: "https://i.ytimg.com/an_webp/ec6yCWX9LGs/mqdefault_6s.webp?du=3000&sqp=CPO2uZYG&rs=AOn4CLDPH3cjPFLObtjfOmu1uDlNVGqNcg", fullname: "Mugisha Precieux", username: "precieux23" }
+    // const user = { userid: "123", _id: "Fsafdfd", profile: "https://i.ytimg.com/an_webp/ec6yCWX9LGs/mqdefault_6s.webp?du=3000&sqp=CPO2uZYG&rs=AOn4CLDPH3cjPFLObtjfOmu1uDlNVGqNcg", fullname: "Mugisha Precieux", username: "precieux23" }
     return (
         <div className='bg-[#ddd] flex flex-col items-center justify-start w-screen h-screen'>
             <Navbar />
