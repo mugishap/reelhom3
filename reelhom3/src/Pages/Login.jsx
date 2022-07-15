@@ -16,7 +16,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import { useUsers } from '../Context/UserContext';
 
 function Login(props) {
-  console.dir(useUsers())
   const { loginUser } = useUsers()
 
   const [formData, setFormData] = useState({
@@ -26,31 +25,30 @@ function Login(props) {
   })
 
   const handleSubmitForm = async (e) => {
-    try{
-    e.preventDefault()
-    const data = await loginUser({ email: formData.email, password: formData.password })
-    if (data.message !== 'Can continue') {
-      toast.error(data.message, {
-        position: "bottom-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
-      return;
-    }
-    setCookie('token', data.token);
-    setCookie('userID', data.user._id);
-    window.location.replace('/');
-    }catch{
-    
+    try {
+      e.preventDefault()
+      const data = await loginUser({ email: formData.email, password: formData.password })
+      if (data.message !== 'Can continue') {
+        toast.error(data.message, {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        return;
+      }
+      setCookie('token', data.token);
+      setCookie('userID', data.user._id);
+      window.location.replace('/');
+    } catch (error) {
+      return error
     }
   }
 
   const handleChange = (prop) => (event) => {
-    console.log(event.target.value);
     setFormData({ ...formData, [prop]: event.target.value });
   };
 

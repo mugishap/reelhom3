@@ -10,11 +10,12 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Input from '@mui/material/Input';
 import { useUsers } from './../Context/UserContext'
-import { ToastContainer,toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
+import { setCookie } from '../Context/RequireAuth';
 
 
 function Signup(props) {
-  const { newUser } = useUsers()
+  const { newUser, loginUser } = useUsers()
   const [formData, setFormData] = useState({
     fullname: "",
     username: "",
@@ -37,10 +38,25 @@ function Signup(props) {
         progress: undefined,
       });
     }
+    const logindata = await loginUser({ email: formData.email, password: formData.password })
+    if (logindata.message !== "Can continue") {
+      toast.error(data.message, {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+    
+    setCookie('token', logindata.token);
+    setCookie('userID', logindata.user._id);
+    return window.location.replace('/')
   }
 
   const handleChange = (prop) => (event) => {
-    console.log(event.target.value);
     setFormData({ ...formData, [prop]: event.target.value });
   };
 
@@ -76,13 +92,13 @@ function Signup(props) {
         <p className='text-2xl my-3 font-semibold'>Create new account</p>
         <form className='flex items-center flex-col justify-center w-full my-4 p-8' onSubmit={handleSubmitForm}>
           <Box sx={{ display: 'flex', alignItems: 'flex-end' }} className='w-full my-2'>
-            <TextField className='w-full' id="input-with-sx" onChange={handleChange('fullname')} label="Full Name" variant="standard" />
+            <TextField className='w-full' id="input-with-sx" onChange={handleChange('fullname')} label="Full Name" name='fullname' variant="standard" />
           </Box>
           <Box sx={{ display: 'flex', alignItems: 'flex-end' }} className='w-full my-2'>
-            <TextField className='w-full' id="input-with-sx" onChange={handleChange('username')} label="Username" variant="standard" />
+            <TextField className='w-full' id="input-with-sx" onChange={handleChange('username')} name='username' label="Username" variant="standard" />
           </Box>
           <Box sx={{ display: 'flex', alignItems: 'flex-end' }} className='w-full my-2'>
-            <TextField className='w-full' id="input-with-sx" onChange={handleChange('email')} label="Email" variant="standard" />
+            <TextField className='w-full' id="input-with-sx" onChange={handleChange('email')} name='email' label="Email" variant="standard" />
           </Box>
           <div className='flex items-center justify-center w-full'>
             <FormControl sx={{ m: 1 }} className='w-full' variant="standard">
