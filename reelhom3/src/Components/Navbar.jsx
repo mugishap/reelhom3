@@ -17,12 +17,8 @@ function Navbar(props) {
     e.preventDefault()
     // setSearchResultsState(true)
   }
-  useEffect(async () => {
-    checkForAccess()
-    const data = await getUserById(getCookie('userID'))
-    if (!data) return window.location.replace('/login')
-    setUser(data)
-    setLoader(false)
+  useEffect(() => {
+    if (props.user) return setUser(props.user)
 }, [])
 
   return (

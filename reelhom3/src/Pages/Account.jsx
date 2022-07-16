@@ -1,8 +1,19 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useParams } from 'react-router-dom'
 import Navbar from '../Components/Navbar'
+import { getUserById } from '../Context/AuthContext'
 
 function Account(props) {
-  const user = { userid: "123", _id: "Fsafdfd", profile: "https://i.ytimg.com/an_webp/ec6yCWX9LGs/mqdefault_6s.webp?du=3000&sqp=CPO2uZYG&rs=AOn4CLDPH3cjPFLObtjfOmu1uDlNVGqNcg", fullname: "Mugisha Precieux", username: "precieux23" }
+  const [searchedUser, setSearchedUser] = useState()
+  const [user, setUser] = useState()
+  const userID = useParams().userID
+
+  const getUser = async () => {
+    const data = await getUserById(userID)
+    if (!data) return window.location.replace('/login')
+    setUser(data)
+  }
+  // const user = { userid: "123", _id: "Fsafdfd", profile: "https://i.ytimg.com/an_webp/ec6yCWX9LGs/mqdefault_6s.webp?du=3000&sqp=CPO2uZYG&rs=AOn4CLDPH3cjPFLObtjfOmu1uDlNVGqNcg", fullname: "Mugisha Precieux", username: "precieux23" }
 
   return (
     <div className='bg-[#eee] w-screen h-screen flex flex-col justify-start items-center'>
@@ -35,7 +46,7 @@ function Account(props) {
           <h1>Posts</h1>
           <div className="grid grid-cols-3">
             <div className="flex items-center justify-center">
-              
+
               <video src="" autoPlay={false} controls={false} playsInline={false}></video>
             </div>
           </div>

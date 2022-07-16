@@ -15,7 +15,7 @@ import { usePosts } from './../Context/PostContext'
 import { checkForAccess } from '../Utils/checkForAccess'
 
 function Home(props) {
-    const { allPosts,getSuggestions } = usePosts()
+    const { allPosts, getSuggestions } = usePosts()
 
     const [showPostForm, setShowPostForm] = useState(false);
     const [user, setUser] = useState({})
@@ -23,9 +23,11 @@ function Home(props) {
     const [posts, setPosts] = useState([])
 
     useEffect(async () => {
-        const data = await getUserById(getCookie('userID'))
-        if (!data) return window.location.replace('/login')
-        setUser(data)
+        if (props.user){
+            setUser(props.user)
+        }else{
+            window.location.replace('/login')
+        }
     }, [])
 
     const getPosts = async () => {
@@ -42,7 +44,6 @@ function Home(props) {
 
     useEffect(() => {
         checkForAccess()
-        // setUser(getUserById(getCookie('userID')))
         getPosts()
         userSuggestions()
     }, [])
