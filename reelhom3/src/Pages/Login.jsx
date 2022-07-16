@@ -17,6 +17,7 @@ import { useUsers } from '../Context/UserContext';
 
 function Login(props) {
   const { loginUser } = useUsers()
+  const [loader,setLoader] = useState(false)
 
   const [formData, setFormData] = useState({
     email: '',
@@ -27,8 +28,10 @@ function Login(props) {
   const handleSubmitForm = async (e) => {
     try {
       e.preventDefault()
+      setLoader(true)
       const data = await loginUser({ email: formData.email, password: formData.password })
       if (data.message !== 'Can continue') {
+        setLoader(false)
         toast.error(data.message, {
           position: "bottom-right",
           autoClose: 5000,
@@ -42,6 +45,7 @@ function Login(props) {
       }
       setCookie('token', data.token);
       setCookie('userID', data.user._id);
+      setLoader(false)
       window.location.replace('/');
     } catch (error) {
       return error
@@ -110,9 +114,9 @@ function Login(props) {
               />
             </FormControl>
           </div>
-          <button className='text-white rounded-sm px-4 cursor-pointer py-1 bg-[#d52777]' type='submit'>
+          {loader? <img src={require('./../Utils/Images/loader.gif')} width={30}/> : <button className='text-white rounded-sm px-4 cursor-pointer py-1 bg-[#d52777]' type='submit'>
             Submit
-          </button>
+          </button>}
         </form>
         <p className='my-3 text-lg'>
           Don't have an account? <Link to='/signup' className='hover:text-pink-600'>Sign Up</Link>

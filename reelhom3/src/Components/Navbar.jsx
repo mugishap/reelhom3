@@ -1,17 +1,30 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { BsSearch } from 'react-icons/bs'
 import { MdOutlineWbSunny, MdDarkMode, MdOutlineVideoLibrary } from 'react-icons/md'
 import { CreatePostPopup } from '../Pages/Home';
 import { changeMode } from '../Utils/themes';
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
+import { getUserById } from '../Context/AuthContext';
+import { getCookie } from '../Context/RequireAuth';
+import { checkForAccess } from '../Utils/checkForAccess';
 
 function Navbar(props) {
   const [search, setSearch] = useState('')
+  const [user, setUser] = useState({})
+  const [loader, setLoader] = useState(true)
   const [showPostForm, setShowPostForm] = useState(false);
   const searchUser = (e) => {
     e.preventDefault()
     // setSearchResultsState(true)
   }
+  useEffect(async () => {
+    checkForAccess()
+    const data = await getUserById(getCookie('userID'))
+    if (!data) return window.location.replace('/login')
+    setUser(data)
+    setLoader(false)
+}, [])
+
   return (
     <div className='flex items-center justify-around absolute bg-white w-full h-16 px-3'>
       {showPostForm ? <CreatePostPopup setShowPostForm={setShowPostForm} /> : null}
@@ -27,9 +40,11 @@ function Navbar(props) {
         <button onClick={() => setShowPostForm(true)} className='flex items-center w-full xl:w-1/2 whitespace-nowrap  justify-center bg-pink-600 text-white px-2 py-1 m-1 rounded-lg'><MdOutlineVideoLibrary />Add video</button>
         <button className='flex items-center justify-center bg-pink-600 w-full xl:w-1/2 whitespace-nowrap text-white px-2 py-1 m-1 rounded-lg'><MdOutlineVideoLibrary />Create video</button>
       </div>
-      <div className="items-center justify-around flex sm:flex md:flex xl:flex p-3">
-        <img src="https://i.ytimg.com/an_webp/ec6yCWX9LGs/mqdefault_6s.webp?du=3000&sqp=CPO2uZYG&rs=AOn4CLDPH3cjPFLObtjfOmu1uDlNVGqNcg" className='rounded-full h-12 w-12' alt="" />
-      </div>
+      {loader ? <img src={require('./../Utils/Images/loader.gif')} width={40} /> : <div className="items-center justify-around flex sm:flex md:flex xl:flex p-3">
+        <Link to={`/account/${user._id}`}>
+          <img src={user.profile} className='rounded-full h-12 w-12' alt="" />
+        </Link>
+      </div>}
       {
         props.mode === 'dark' ? <MdOutlineWbSunny onClick={changeMode} size={30} color='#db2777' /> : <MdDarkMode size={30} color='#db2777' onClick={changeMode} />
       }

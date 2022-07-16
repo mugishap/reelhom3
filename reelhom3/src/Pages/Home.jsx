@@ -12,6 +12,7 @@ import Comments from '../Components/Comments'
 import { getUserById } from '../Context/AuthContext'
 import { getCookie } from '../Context/RequireAuth'
 import { usePosts } from './../Context/PostContext'
+import { checkForAccess } from '../Utils/checkForAccess'
 
 function Home(props) {
     const { allPosts,getSuggestions } = usePosts()
@@ -40,11 +41,12 @@ function Home(props) {
     }
 
     useEffect(() => {
+        checkForAccess()
+        // setUser(getUserById(getCookie('userID')))
         getPosts()
         userSuggestions()
     }, [])
-    
-    // const user = { userid: "123", _id: "Fsafdfd", profile: "https://i.ytimg.com/an_webp/ec6yCWX9LGs/mqdefault_6s.webp?du=3000&sqp=CPO2uZYG&rs=AOn4CLDPH3cjPFLObtjfOmu1uDlNVGqNcg", fullname: "Mugisha Precieux", username: "precieux23" }
+
     return (
         <div className='bg-[#ddd] flex flex-col items-center justify-start w-screen h-screen'>
             <Navbar />
@@ -52,7 +54,7 @@ function Home(props) {
                 {showPostForm ? <CreatePostPopup setShowPostForm={setShowPostForm} /> : null}
                 <div className="home-sections mx-2 mt-3 items-center justify-center flex-col w-3/12  rounded-lg py-4 h-2/3 hidden sm:flex md:flex xl:flex">
                     <div className='w-10/12 flex py-3 flex-col bg-white rounded-lg items-center justify-center'>
-                        <img className='relative -top-16 rounded-full border-2 border-white w-32 h-32 object-cover' src="https://i.ytimg.com/an_webp/ec6yCWX9LGs/mqdefault_6s.webp?du=3000&sqp=CPO2uZYG&rs=AOn4CLDPH3cjPFLObtjfOmu1uDlNVGqNcg" alt="" />
+                        <img className='relative -top-16 rounded-full border-2 border-white w-32 h-32 object-cover' src={user.profile} alt="" />
                         <Link to={`/account/${user._id}`} className='relative text-black text-center text-2xl font-bold'>John Doe</Link>
                         <p className='text-black text-center text-sm w-8/12 my-4'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quidem.</p>
                         <div className='flex items-center justify-around w-full'>
