@@ -6,7 +6,7 @@ import { getUserById } from '../Context/AuthContext'
 function Account(props) {
   const [searchedUser, setSearchedUser] = useState()
   const [user, setUser] = useState()
-  const userID = useParams().userID
+  const userID = useParams('userID')
 
   const getUser = async () => {
     const data = await getUserById(userID)
