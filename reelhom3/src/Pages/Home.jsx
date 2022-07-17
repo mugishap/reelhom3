@@ -82,7 +82,7 @@ function Home(props) {
                         <h1 className='text-xl my-3'>Recent reels</h1>
                         <button className='flex items-center justify-center text-white bg-pink-600 rounded py-1 px-4'><HiSortDescending />Sort</button>
                     </div>
-                    <div className="post-sections pt-3 bg-white overflow-x-scroll items-center justify-start flex-col w-11/12 rounded-lg my-2 h-4/5 sm:flex md:flex xl:flex">
+                    <div className="post-sections pt-3 bg-white overflow-x-scroll items-center justify-start flex-col w-11/12 rounded-lg my-2 h-full sm:flex md:flex xl:flex">
                         {
                             posts.map(post => <Post key={post._id} post={post} user={props.user} />)
 
@@ -158,12 +158,16 @@ export function CreatePostPopup({ user, setShowPostForm }) {
             setLoader(false)
             return
         }
+        
         setLoader(false)
         // setShowPostForm(false)
 
     }
     const previewFile = (base64VideoString) => {
+        console.log("Before", formData.videoStr);
         setFormData({ ...formData, videoStr: base64VideoString })
+        console.log("After", formData.videoStr);
+
     }
 
     const dragEvent = (e) => {
@@ -218,6 +222,17 @@ export function CreatePostPopup({ user, setShowPostForm }) {
                 draggable
                 pauseOnHover
             />
+            <ToastContainer
+                position="bottom-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+            />
             <div className='bg-transparent h-full w-full absolute top-0 left-0 z-[5]' onClick={() => setShowPostForm(false)}></div>
             <div className='bg-white z-[10] w-1/2 h-4/5 rounded-lg text-black flex items-center justify-center'>
                 <div onDrag={dragEvent} onDragEnd={dropEvent} className='flex flex-col items-center rounded-lg justify-center w-1/2 h-full' style={{ 'border': '3px dashed grey' }}>
@@ -243,7 +258,7 @@ export function CreatePostPopup({ user, setShowPostForm }) {
                     <form onSubmit={handleSubmitForm} className='flex flex-col items-center justify-center w-full'>
                         <textarea maxLength={500} className='rounded-lg border-2 w-4/5 border-black h-48 my-3 p-3' placeholder='Type something' type="text" onChange={(e) => { setFormData({ ...FormData, caption: e.target.value }) }}></textarea>
                         <label htmlFor="video_to_post" className='flex items-center justify-center bg-pink-600 text-white rounded-lg px-2 py-1'><BiUpload />Upload video</label>
-                        <input required={true} id='video_to_post' className='hidden' accept='video/mp4,video/x-m4v,video/*' type="file" onChange={handleFileChange} />
+                        <input required id='video_to_post' className='hidden' accept='video/mp4,video/x-m4v,video/*' type="file" onChange={handleFileChange} />
                         {
                             loader ?
                                 <img className='mt-3' width={40} src={require('./../Utils/Images/loader.gif')} alt="" />
