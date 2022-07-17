@@ -10,10 +10,8 @@ export const usePosts = () => {
 export const PostProvider = ({ children }) => {
 	const [posts, setPosts] = useState([]);
 
-
-	const baseURL = 'http://localhost:5050'
-	// const baseURL = 'reelhome-backend.herokuapp.com'
-
+	const baseURL = 'https://reelhome.herokuapp.com'
+	// const baseURL = 'http://localhost:5050'
 
 	const allPosts = async () => {
 		const res = await fetch(

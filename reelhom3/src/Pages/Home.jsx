@@ -45,7 +45,7 @@ function Home(props) {
         return data
     }
 
-    setUser(props.user)
+    // setUser(props.user)
 
     useEffect(() => {
         checkForAccess()
@@ -56,13 +56,13 @@ function Home(props) {
 
     return (
         <div className='bg-[#ddd] flex flex-col items-center justify-start w-screen h-screen'>
-            <Navbar />
+            <Navbar user={props.user} />
             <div className='main-home h-full w-full flex items-start justify-center flex-row px-0 pt-16 sm:px-4 md:px-10 xl:px-16'>
                 {showPostForm ? <CreatePostPopup setShowPostForm={setShowPostForm} /> : null}
                 <div className="home-sections mx-2 mt-3 items-center justify-center flex-col w-3/12  rounded-lg py-4 h-2/3 hidden sm:flex md:flex xl:flex">
                     <div className='w-10/12 flex py-3 flex-col bg-white rounded-lg items-center justify-center'>
-                        <img className='relative -top-16 rounded-full border-2 border-white w-32 h-32 object-cover' src={user.profile} alt="" />
-                        <Link to={`/account/${user._id}`} className='relative text-black text-center text-2xl font-bold'>John Doe</Link>
+                        <img className='relative -top-16 rounded-full border-2 border-white w-32 h-32 object-cover' src={props.user.profile} alt="" />
+                        <Link to={`/account/${props.user._id}`} className='relative text-black text-center text-2xl font-bold'>John Doe</Link>
                         <p className='text-black text-center text-sm w-8/12 my-4'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quidem.</p>
                         <div className='flex items-center justify-around w-full'>
                             <div className='flex flex-col items-center justify-center'>
