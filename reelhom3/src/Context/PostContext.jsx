@@ -10,8 +10,8 @@ export const usePosts = () => {
 export const PostProvider = ({ children }) => {
 	const [posts, setPosts] = useState([]);
 
-	const baseURL = 'https://reelhome.herokuapp.com'
-	// const baseURL = 'http://localhost:5050'
+	// const baseURL = 'https://reelhome.herokuapp.com'
+	const baseURL = 'http://localhost:5050'
 
 	const allPosts = async () => {
 		const res = await fetch(
@@ -28,11 +28,11 @@ export const PostProvider = ({ children }) => {
 		const posts = await res.json();
 		console.log(res);
 		setPosts(posts.posts.reverse());
-		console.log(posts);
-		return posts;
+		console.log(posts.posts);
+		return posts.posts;
 	};
 
-	const newPost = async (caption, imageStr) => {
+	const newPost = async ({caption, videoStr}) => {
 		const res = await fetch(
 			`${baseURL}/post/newPost`,
 			{
@@ -42,16 +42,14 @@ export const PostProvider = ({ children }) => {
 					authorization: "Bearer " + getCookie("token"),
 				},
 				body: JSON.stringify({
-					imageStr: imageStr,
+					videoStr: videoStr,
 					caption,
 				}),
 			}
 		);
 		const data = await res.json();
-		console.log(res);
-		setPosts(data.posts.reverse());
-		console.log(posts);
-		return posts;
+		// console.log(data);
+		return data;
 	}
 
 	const deletePost = async (id) => {
@@ -195,7 +193,7 @@ export const PostProvider = ({ children }) => {
 		return data;
 	}
 
-	const updatePost = async (postID, imageStr, caption) => {
+	const updatePost = async ({postID, videoStr, caption}) => {
 		const res = await fetch(
 			`${baseURL}/post/updatePost/${postID}`,
 			{
@@ -205,7 +203,7 @@ export const PostProvider = ({ children }) => {
 					authorization: "Bearer " + getCookie("token"),
 				},
 				body: JSON.stringify({
-					imageStr,
+					videoStr,
 					caption,
 				}),
 			}

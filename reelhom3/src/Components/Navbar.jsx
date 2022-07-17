@@ -5,8 +5,9 @@ import { CreatePostPopup } from '../Pages/Home';
 import { changeMode } from '../Utils/themes';
 import { Link } from 'react-router-dom'
 import { getUserById } from '../Context/AuthContext';
-import { getCookie } from '../Context/RequireAuth';
+import { getCookie,deleteAllCookies } from '../Context/RequireAuth';
 import { checkForAccess } from '../Utils/checkForAccess';
+import {AiOutlineLogout} from 'react-icons/ai'
 
 function Navbar(props) {
   const [search, setSearch] = useState('')
@@ -14,12 +15,15 @@ function Navbar(props) {
   const [showPostForm, setShowPostForm] = useState(false);
   const searchUser = (e) => {
     e.preventDefault()
-    // setSearchResultsState(true)
+  }
+  const logout = () => {
+    deleteAllCookies()
+   window.location.replace('/login')
   }
 
   return (
     <div className='flex items-center justify-around absolute bg-white w-full h-16 px-3'>
-      {showPostForm ? <CreatePostPopup setShowPostForm={setShowPostForm} /> : null}
+      {showPostForm ? <CreatePostPopup user={props.user} setShowPostForm={setShowPostForm} /> : null}
       <Link to={'/'}><span className='text-black flex items-center justify-center text-2xl font-semibold'>Reel<p className='text-pink-600'>home</p></span></Link>
       <div className='flex items-center justify-center w-1/5'>
         <form onSubmit={searchUser} className='w-full flex items-center justify-center h-full rounded-md p-1 bg-slate-100  border-2 border-gray-300'>
@@ -32,14 +36,12 @@ function Navbar(props) {
         <button onClick={() => setShowPostForm(true)} className='flex items-center w-full xl:w-1/2 whitespace-nowrap  justify-center bg-pink-600 text-white px-2 py-1 m-1 rounded-lg'><MdOutlineVideoLibrary />Add video</button>
         <button className='flex items-center justify-center bg-pink-600 w-full xl:w-1/2 whitespace-nowrap text-white px-2 py-1 m-1 rounded-lg'><MdOutlineVideoLibrary />Create video</button>
       </div>
-      {loader ? <img src={require('./../Utils/Images/loader.gif')} width={40} /> : <div className="items-center justify-around flex sm:flex md:flex xl:flex p-3">
+      <div className="items-center justify-around flex sm:flex md:flex xl:flex p-3">
         <Link to={`/account/${props.user._id}`}>
           <img src={props.user.profile} className='rounded-full h-12 w-12' alt="" />
         </Link>
-      </div>}
-      {
-        props.mode === 'dark' ? <MdOutlineWbSunny onClick={changeMode} size={30} color='#db2777' /> : <MdDarkMode size={30} color='#db2777' onClick={changeMode} />
-      }
+      </div>
+      <AiOutlineLogout onClick={logout} title='Logout' className='p-2 rounded-full bg-pink-600' color='white' size={35} />
     </div>
   )
 }

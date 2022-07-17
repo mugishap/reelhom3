@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import Navbar from '../Components/Navbar'
 import { getUserById } from '../Context/AuthContext'
@@ -7,17 +7,17 @@ function Account(props) {
   const [searchedUser, setSearchedUser] = useState()
   const [user, setUser] = useState()
   const userID = useParams('userID')
-
-  const getUser = async () => {
+  const getSearchedUser = async () => {
     const data = await getUserById(userID)
-    if (!data) return window.location.replace('/login')
+    if (!data) return window.location.replace('/notfound')
     setUser(data)
   }
-  // const user = { userid: "123", _id: "Fsafdfd", profile: "https://i.ytimg.com/an_webp/ec6yCWX9LGs/mqdefault_6s.webp?du=3000&sqp=CPO2uZYG&rs=AOn4CLDPH3cjPFLObtjfOmu1uDlNVGqNcg", fullname: "Mugisha Precieux", username: "precieux23" }
-
+  useEffect(() => {
+    getSearchedUser()
+  }, [])
   return (
     <div className='bg-[#eee] w-screen h-screen flex flex-col justify-start items-center'>
-      <Navbar />
+      <Navbar user={props.user} />
       <div className='w-full flex h-full items-center justify-around'>
         <div className='w-1/5 h-fit rounded-lg bg-white flex-col flex items-center justify-center'>
           <div className='w-full h-1/3 flex cover-profile'>

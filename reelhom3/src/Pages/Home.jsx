@@ -9,10 +9,11 @@ import Suggestion from '../Components/Suggestion'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Comments from '../Components/Comments'
-import { getUserById } from '../Context/AuthContext'
 import { getCookie } from '../Context/RequireAuth'
 import { usePosts } from './../Context/PostContext'
 import { checkForAccess } from '../Utils/checkForAccess'
+import { AiOutlineSend } from 'react-icons/ai'
+import { getUserById } from '../Context/AuthContext'
 
 function Home(props) {
     const { allPosts, getSuggestions } = usePosts()
@@ -58,20 +59,20 @@ function Home(props) {
         <div className='bg-[#ddd] flex flex-col items-center justify-start w-screen h-screen'>
             <Navbar user={props.user} />
             <div className='main-home h-full w-full flex items-start justify-center flex-row px-0 pt-16 sm:px-4 md:px-10 xl:px-16'>
-                {showPostForm ? <CreatePostPopup setShowPostForm={setShowPostForm} /> : null}
+                {showPostForm ? <CreatePostPopup user={props.user} setShowPostForm={setShowPostForm} /> : null}
                 <div className="home-sections mx-2 mt-3 items-center justify-center flex-col w-3/12  rounded-lg py-4 h-2/3 hidden sm:flex md:flex xl:flex">
                     <div className='w-10/12 flex py-3 flex-col bg-white rounded-lg items-center justify-center'>
                         <img className='relative -top-16 rounded-full border-2 border-white w-32 h-32 object-cover' src={props.user.profile} alt="" />
-                        <Link to={`/account/${props.user._id}`} className='relative text-black text-center text-2xl font-bold'>John Doe</Link>
-                        <p className='text-black text-center text-sm w-8/12 my-4'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quidem.</p>
+                        <Link to={`/account/${props.user._id}`} className='relative text-black text-center text-2xl font-bold'>{props.user.fullname}</Link>
+                        <p className='text-black text-center text-sm w-8/12 my-4'>{props.user.bio}</p>
                         <div className='flex items-center justify-around w-full'>
                             <div className='flex flex-col items-center justify-center'>
                                 <h1 className='text-black text-center text-2xl font-bold'>Followers</h1>
-                                <h1 className='text-black text-center text-xl font-bold'>123</h1>
+                                <h1 className='text-black text-center text-xl font-bold'>{props.user.followers}</h1>
                             </div>
                             <div className='flex flex-col items-center justify-center'>
                                 <h1 className='text-black text-center text-2xl font-bold'>Following</h1>
-                                <h1 className='text-black text-center text-xl font-bold'>123</h1>
+                                <h1 className='text-black text-center text-xl font-bold'>{props.user.following}</h1>
                             </div>
                         </div>
                     </div>
@@ -82,8 +83,10 @@ function Home(props) {
                         <button className='flex items-center justify-center text-white bg-pink-600 rounded py-1 px-4'><HiSortDescending />Sort</button>
                     </div>
                     <div className="post-sections pt-3 bg-white overflow-x-scroll items-center justify-start flex-col w-11/12 rounded-lg my-2 h-4/5 sm:flex md:flex xl:flex">
-                        <Post posterData={{ _id: (Math.floor(Math.random() * 999999)), username: "precieux23", profile: 'https://i.ytimg.com/an_webp/ec6yCWX9LGs/mqdefault_6s.webp?du=3000&sqp=CPO2uZYG&rs=AOn4CLDPH3cjPFLObtjfOmu1uDlNVGqNcg' }} post={{ caption: "Don't pour the water", videoUrl: 'https://v16-webapp.tiktok.com/8f6fbb374f69f9458efd03807d465a47/62ceb30d/video/tos/useast2a/tos-useast2a-pve-0068/6884339267e74020b35429e69435b78e/?a=1988&ch=0&cr=0&dr=0&lr=tiktok_m&cd=0%7C0%7C1%7C0&cv=1&br=1354&bt=677&btag=80000&cs=0&ds=3&ft=eXd.6HnlMyq8ZQPNXwe2NuY0yl7Gb&mime_type=video_mp4&qs=0&rc=Mzw7aTczZjY1NTZmOTxkOUBpMzo2ajc6ZjRnZTMzNzczM0BfXi8wXl9hNV4xMDYxMV4uYSNqYmBrcjRfcjBgLS1kMTZzcw%3D%3D&l=20220713055556010190208043240ABE6B' }} />
-                        <Post posterData={{ _id: (Math.floor(Math.random() * 999999)), username: "precieux23", profile: 'https://i.ytimg.com/an_webp/ec6yCWX9LGs/mqdefault_6s.webp?du=3000&sqp=CPO2uZYG&rs=AOn4CLDPH3cjPFLObtjfOmu1uDlNVGqNcg' }} post={{ caption: "Don't pour the water", videoUrl: 'https://v16-webapp.tiktok.com/8f6fbb374f69f9458efd03807d465a47/62ceb30d/video/tos/useast2a/tos-useast2a-pve-0068/6884339267e74020b35429e69435b78e/?a=1988&ch=0&cr=0&dr=0&lr=tiktok_m&cd=0%7C0%7C1%7C0&cv=1&br=1354&bt=677&btag=80000&cs=0&ds=3&ft=eXd.6HnlMyq8ZQPNXwe2NuY0yl7Gb&mime_type=video_mp4&qs=0&rc=Mzw7aTczZjY1NTZmOTxkOUBpMzo2ajc6ZjRnZTMzNzczM0BfXi8wXl9hNV4xMDYxMV4uYSNqYmBrcjRfcjBgLS1kMTZzcw%3D%3D&l=20220713055556010190208043240ABE6B' }} />
+                        {
+                            posts.map(post => <Post key={post._id} post={post} user={props.user} />)
+
+                        }
                     </div>
                 </div>
                 <div className="home-sections mx-2 mt-10 items-start justify-start pt-3 flex-col w-3/12 bg-white rounded-lg py-4 h-2/3 hidden sm:flex md:flex xl:flex">
@@ -113,19 +116,54 @@ function Home(props) {
 export default Home
 
 
-export function CreatePostPopup({ setShowPostForm }) {
+export function CreatePostPopup({ user, setShowPostForm }) {
+
+    const { newPost } = usePosts()
 
     const [formData, setFormData] = useState({
         videoStr: "",
         caption: ""
     })
+    const [loader, setLoader] = useState(false)
 
-    const handleSubmitForm = () => {
+    const handleSubmitForm = async (e) => {
+        e.preventDefault()
+        setLoader(true)
+        if (!formData.videoStr) {
+            console.log(formData.videoStr);
+            toast.error("Video cannot be empty", {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+            setLoader(false)
+            return
+        }
+        const data = await newPost({ caption: formData.caption, videoStr: formData.videoStr })
+        console.log(data)
+        if (data.message !== "Post created succesfully") {
+            toast.error(data.message, {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+            setLoader(false)
+            return
+        }
+        setLoader(false)
+        // setShowPostForm(false)
 
     }
     const previewFile = (base64VideoString) => {
         setFormData({ ...formData, videoStr: base64VideoString })
-        document.getElementById("videoPreview").src = base64VideoString
     }
 
     const dragEvent = (e) => {
@@ -186,8 +224,8 @@ export function CreatePostPopup({ setShowPostForm }) {
                     {(formData.videoStr || formData.caption) ?
                         (<div className='p-2 relative  z-[4] flex items-center justify-center flex-col rounded w-full h-full'>
                             <div className='mb-3 w-full flex items-center justify-start'>
-                                <img className='rounded-full h-12 w-12' src="https://i.ytimg.com/an_webp/ec6yCWX9LGs/mqdefault_6s.webp?du=3000&sqp=CPO2uZYG&rs=AOn4CLDPH3cjPFLObtjfOmu1uDlNVGqNcg" alt="" />
-                                <p className='pl-1'>precieux23</p>
+                                <img className='rounded-full h-12 w-12' src={user.profile} alt="" />
+                                <p className='pl-1'>{user.username}</p>
                             </div>
                             <video className='w-full h-[45vh] rounded-lg' autoPlay={true} controls src={formData.videoStr}></video>
                             <p className='mt-3 h-48 w-full whitespace-wrap'>{formData.caption}</p>
@@ -205,7 +243,13 @@ export function CreatePostPopup({ setShowPostForm }) {
                     <form onSubmit={handleSubmitForm} className='flex flex-col items-center justify-center w-full'>
                         <textarea maxLength={500} className='rounded-lg border-2 w-4/5 border-black h-48 my-3 p-3' placeholder='Type something' type="text" onChange={(e) => { setFormData({ ...FormData, caption: e.target.value }) }}></textarea>
                         <label htmlFor="video_to_post" className='flex items-center justify-center bg-pink-600 text-white rounded-lg px-2 py-1'><BiUpload />Upload video</label>
-                        <input id='video_to_post' className='hidden' accept='video/mp4,video/x-m4v,video/*' type="file" onChange={handleFileChange} />
+                        <input required={true} id='video_to_post' className='hidden' accept='video/mp4,video/x-m4v,video/*' type="file" onChange={handleFileChange} />
+                        {
+                            loader ?
+                                <img className='mt-3' width={40} src={require('./../Utils/Images/loader.gif')} alt="" />
+                                :
+                                <button className='rounded-lg px-6 text-lg mt-8 flex items-center justify-center py-2 text-white bg-pink-600' type="submit"><AiOutlineSend />Submit</button>
+                        }
                     </form>
                 </div>
             </div>
@@ -214,15 +258,15 @@ export function CreatePostPopup({ setShowPostForm }) {
 }
 
 
-export function postPopUp({ post, setShowPost }) {
+export function postPopUp(props, { post, setShowPost }) {
     return (
         <div className='absolute w-screen h-screen bg-black/70 flex items-center justify-center'>
             <div className='w-3/5 rounded p-3 h-2/3 flex items-center justify-center bg-white'>
                 <div className='w-1/2 h-full flex items-center justify-center flex-col'>
                     <div className='p-2 relative  z-[4] flex items-center justify-center flex-col rounded w-full h-full'>
                         <div className='mb-3 w-full flex items-center justify-start'>
-                            <img className='rounded-full h-12 w-12 object-cover' src="https://i.ytimg.com/an_webp/ec6yCWX9LGs/mqdefault_6s.webp?du=3000&sqp=CPO2uZYG&rs=AOn4CLDPH3cjPFLObtjfOmu1uDlNVGqNcg" alt="" />
-                            <p className='pl-1'>precieux23</p>
+                            <img className='rounded-full h-12 w-12 object-cover' src={props.user.profile} alt="" />
+                            <p className='pl-1'>{props.user.username}</p>
                         </div>
                         <video className='w-full h-[45vh] rounded-lg' autoPlay={true} controls src={post.videoStr}></video>
                         <p className='mt-3 h-48 w-full whitespace-wrap'>{post.caption}</p>

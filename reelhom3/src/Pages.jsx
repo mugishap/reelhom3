@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Account from './Pages/Account'
 import Explore from './Pages/Explore'
 import Home from './Pages/Home'
@@ -6,7 +6,7 @@ import Login from './Pages/Login'
 import Signup from './Pages/Signup'
 import { Route, Routes, BrowserRouter, Navigate } from 'react-router-dom'
 import NotFound from './Pages/NotFound'
-import { getCookie } from './Context/RequireAuth'
+import { deleteAllCookies, getCookie } from './Context/RequireAuth'
 import { getUserById } from './Context/AuthContext'
 import { useState } from 'react'
 
@@ -17,12 +17,15 @@ function Pages(props) {
 
     const getUser = async () => {
         const data = await getUserById(getCookie('userID'))
-        if (!data) return window.location.replace('/login')
+        if (!data) return deleteAllCookies()
         setUser(data)
     }
-    if (getCookie('userID')) {
-        getUser()
-    }
+    useEffect(()=>{
+        if (getCookie('userID')) {
+            getUser()
+        }
+        else{console.log("Undefined")}
+    },[])
 
     return (
         <div>

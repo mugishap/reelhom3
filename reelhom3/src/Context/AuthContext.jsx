@@ -4,8 +4,8 @@ import {  getCookie } from './RequireAuth';
 
 let AuthContext = React.createContext();
 
-const baseURL = 'https://reelhome.herokuapp.com'
-// const baseURL = 'http://localhost:5050'
+// const baseURL = 'https://reelhome.herokuapp.com'
+const baseURL = 'http://localhost:5050'
 
 export const useAuth = () => {
     return React.useContext(AuthContext);
@@ -19,9 +19,9 @@ export default function AuthProvider({ children }) {
     if (token) {
       try{
         const userDetails = await jwtdecode(token);
-        const userd = await getUserById(userDetails.userid);
-        console.log(userd);
-       return setUser(userd);
+        const userID = await getUserById(userDetails.userid);
+        console.log(userID);
+       return setUser(userID);
       }
       catch(err){
         console.log(err);
