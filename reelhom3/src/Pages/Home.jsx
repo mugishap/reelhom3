@@ -51,7 +51,6 @@ function Home(props) {
 
     useEffect(() => {
         checkForAccess()
-        // getUser()
         getPosts()
         userSuggestions()
     }, [])
@@ -105,7 +104,7 @@ function Home(props) {
                         {suggestions.map((user) => {
                             return (
 
-                                <Suggestion user={user} />
+                                <Suggestion key={user._id} user={user} />
                             )
                         })}
 

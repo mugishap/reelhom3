@@ -38,7 +38,7 @@ function Navbar(props) {
       </div>
       <div className="items-center justify-around flex sm:flex md:flex xl:flex p-3">
         <Link to={`/account/${props.user._id}`}>
-          <img src={props.user.profile} className='rounded-full h-12 w-12' alt="" />
+          <img src={props.user.profile} className='object-cover rounded-full h-12 w-12' alt="" />
         </Link>
       </div>
       <AiOutlineLogout onClick={logout} title='Logout' className='p-2 rounded-full bg-pink-600' color='white' size={35} />

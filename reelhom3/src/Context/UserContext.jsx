@@ -68,7 +68,7 @@ export const UserProvider = ({ children }) => {
     const data = await res.json();
     return data;
   }
-  const followUser = async (userID) => {
+  const followUser = async (userID,status) => {
     const res = await fetch(`${baseURL}/user/follow`, {
       method: "POST",
       headers: {
@@ -77,25 +77,13 @@ export const UserProvider = ({ children }) => {
       },
       body: JSON.stringify({
         user: userID,
+        status
       })
     })
     const data = await res.json();
     return data;
   }
-  const unFollowUser = async (userID) => {
-    const res = await fetch(`${baseURL}/user/unfollow`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "authorization": `Bearer ${getCookie("token")}`
-      },
-      body: JSON.stringify({
-        user: userID,
-      })
-    })
-    const data = await res.json();
-    return data;
-  }
+
   const updateCoverPicture = async (imageStr) => {
     const res = await fetch(`${baseURL}/user/updateCoverPicture`, {
       method: "POST",
@@ -141,7 +129,7 @@ export const UserProvider = ({ children }) => {
     return data;
 
   }
-  const updateUser = async ({fullname, username, email }) => {
+  const updateUser = async ({ fullname, username, email }) => {
     const res = await fetch(`${baseURL}/user/update`, {
       method: "POST",
       headers: {
@@ -157,8 +145,29 @@ export const UserProvider = ({ children }) => {
     const data = await res.json();
     return data;
   }
-  const getFollowingData = async () => {
-    const res = await fetch(`${baseURL}/user/following`, {
+
+  const updateAllAspects = async ({ fullname, username, email, cover, profile }) => {
+    const res = await fetch(`${baseURL}/user/updateAllAspects`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        "authorization": `Bearer ${getCookie("token")}`
+      },
+      body: JSON.stringify({
+        fullname,
+        username,
+        email,
+        cover,
+        profile
+      })
+    })
+    const data = await res.json();
+    console.log(data)
+    return data;
+  }
+
+  const getFollowDataByID = async (userID) => {
+    const res = await fetch(`${baseURL}/user/followdata/${userID}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -167,44 +176,8 @@ export const UserProvider = ({ children }) => {
     })
     const data = await res.json();
     return data;
-
   }
-  const getFollowerData = async () => {
-    const res = await fetch(`${baseURL}/user/followers`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "authorization": `Bearer ${getCookie("token")}`
-      },
-    })
-    const data = await res.json();
-    return data;
 
-  }
-  const getFollowingDataById = async (userID) => {
-    const res = await fetch(`${baseURL}/user/following/${userID}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "authorization": `Bearer ${getCookie("token")}`
-      },
-    })
-    const data = await res.json();
-    return data;
-
-  }
-  const getFollowerDataById = async (userID) => {
-    const res = await fetch(`${baseURL}/user/followers/${userID}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "authorization": `Bearer ${getCookie("token")}`
-      },
-    })
-    const data = await res.json();
-    return data;
-
-  }
   const updatePassword = async ({ password, newPassword }) => {
     const res = await fetch(`${baseURL}/user/updatePassword`, {
       method: "POST",
@@ -269,7 +242,7 @@ export const UserProvider = ({ children }) => {
   }
 
   return (
-    <UserContext.Provider value={{ newUser, loginUser, getUserByID, getSuggestions, followUser, unFollowUser, updateCoverPicture, updateProfilePicture, updateBiography, updateUser, getFollowingData, getFollowerData, updatePassword, deleteUser, getAllUsers, searchUser, getUserByName, getFollowingDataById, getFollowerDataById }}>
+    <UserContext.Provider value={{ newUser,updateAllAspects, loginUser, getUserByID, getSuggestions, followUser, updateCoverPicture, updateProfilePicture, updateBiography, updateUser, getFollowDataByID, updatePassword, deleteUser, getAllUsers, searchUser, getUserByName }}>
       {children}
     </UserContext.Provider>
   );

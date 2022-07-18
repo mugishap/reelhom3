@@ -12,7 +12,7 @@ function Suggestion(props) {
                 <Link to={`account/${props.user._id}`}><p className='text-,d font-light whitespace-nowrap'>@{props.user.username}</p></Link>
             </div>
             <div className="ml-3 flex items-center justify-center">
-                <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full'>Follow</button>
+                <Link to={`account/${props.user._id}`}><button className='bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 px-4 rounded-full'>View</button></Link>
             </div>
         </div>
     )
