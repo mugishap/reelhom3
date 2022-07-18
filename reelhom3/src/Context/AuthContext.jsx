@@ -4,8 +4,8 @@ import {  getCookie } from './RequireAuth';
 
 let AuthContext = React.createContext();
 
-// const baseURL = 'https://reelhome.herokuapp.com'
-const baseURL = 'http://localhost:5050'
+const baseURL = 'https://reelhome.herokuapp.com'
+// const baseURL = 'http://localhost:5050'
 
 export const useAuth = () => {
     return React.useContext(AuthContext);

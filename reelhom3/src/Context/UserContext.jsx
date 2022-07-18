@@ -11,8 +11,8 @@ export const UserProvider = ({ children }) => {
 
   const [users, setUsers] = React.useState([]);
 
-  // const baseURL = 'https://reelhome.herokuapp.com'
-  const baseURL = 'http://localhost:5050'
+  const baseURL = 'https://reelhome.herokuapp.com'
+  // const baseURL = 'http://localhost:5050'
   const newUser = async ({ fullname, username, email, password }) => {
     const res = await fetch(`${baseURL}/user/new`, {
       method: "POST",
