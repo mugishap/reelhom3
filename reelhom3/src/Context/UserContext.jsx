@@ -141,7 +141,7 @@ export const UserProvider = ({ children }) => {
     return data;
 
   }
-  const updateUser = async ({ username, email }) => {
+  const updateUser = async ({fullname, username, email }) => {
     const res = await fetch(`${baseURL}/user/update`, {
       method: "POST",
       headers: {
@@ -149,6 +149,7 @@ export const UserProvider = ({ children }) => {
         "authorization": `Bearer ${getCookie("token")}`
       },
       body: JSON.stringify({
+        fullname,
         username,
         email,
       })

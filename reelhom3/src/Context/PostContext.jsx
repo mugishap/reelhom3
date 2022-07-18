@@ -230,6 +230,21 @@ export const PostProvider = ({ children }) => {
 		return data;
 	}
 
+const getPostsByUser = async (userID) => {
+	const res = await fetch(
+		`${baseURL}/post/getPostByPosterID/${userID}`,
+		{
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+				authorization: "Bearer " + getCookie("token"),
+			},
+		}
+	);
+	const data = await res.json();
+	return data;
+}
+
 	const getAllPostDataById = async (postID) => {
 		const res = await fetch(
 			`${baseURL}/post/getAllPostData/${postID}`, {
@@ -269,7 +284,7 @@ export const PostProvider = ({ children }) => {
 
 	return (
 		<PostContext.Provider value={{
-			posts, setPosts, allPosts, newPost, deletePost, deleteComment, commentOnPost, likePost, getAllPostDataById, getCommentsByPost,
+			posts, setPosts,getPostsByUser, allPosts, newPost, deletePost, deleteComment, commentOnPost, likePost, getAllPostDataById, getCommentsByPost,
 			getLikesDataByPost, getLikesCountByPost, unlikePost, updateCommentOnPost, updatePost, getPostsByFollowing
 		}}>
 			{children}

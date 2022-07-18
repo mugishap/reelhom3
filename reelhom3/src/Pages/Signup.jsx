@@ -16,6 +16,8 @@ import { setCookie } from '../Context/RequireAuth';
 
 function Signup(props) {
   const { newUser, loginUser } = useUsers()
+  const [loader,setLoader] = useState(false)
+
   const [formData, setFormData] = useState({
     fullname: "",
     username: "",
@@ -26,6 +28,7 @@ function Signup(props) {
 
   const handleSubmitForm = async (e) => {
     e.preventDefault()
+    setLoader(true)
     const data = await newUser({ fullname: formData.fullname, username: formData.username, email: formData.email, password: formData.password })
     if (data.message !== 'Account created') {
       toast.error(data.message, {
@@ -37,6 +40,7 @@ function Signup(props) {
         draggable: true,
         progress: undefined,
       });
+      setLoader(false)
     }
     const logindata = await loginUser({ email: formData.email, password: formData.password })
     if (logindata.message !== "Can continue") {
@@ -50,7 +54,7 @@ function Signup(props) {
         progress: undefined,
       });
     }
-    
+
     setCookie('token', logindata.token);
     setCookie('userID', logindata.user._id);
     return window.location.replace('/')
@@ -123,9 +127,9 @@ function Signup(props) {
               />
             </FormControl>
           </div>
-          <button className='text-white rounded-sm px-4 cursor-pointer py-1 bg-[#d52777]' type='submit'>
+          {loader? <img src={require('./../Utils/Images/loader.gif')} width={30}/> : <button className='text-white rounded-sm px-4 cursor-pointer py-1 bg-[#d52777]' type='submit'>
             Submit
-          </button>
+          </button>}
         </form>
         <p className='my-3 text-lg'>
           Already have an account? <Link to='/login' className='hover:text-pink-600'>Sign In</Link>

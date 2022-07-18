@@ -14,10 +14,11 @@ import { usePosts } from './../Context/PostContext'
 import { checkForAccess } from '../Utils/checkForAccess'
 import { AiOutlineSend } from 'react-icons/ai'
 import { getUserById } from '../Context/AuthContext'
+import { useUsers } from '../Context/UserContext'
 
 function Home(props) {
-    const { allPosts, getSuggestions } = usePosts()
-
+    const { allPosts } = usePosts()
+    const { getSuggestions } = useUsers()
 
     const [showPostForm, setShowPostForm] = useState(false);
     const [suggestions, setSuggestions] = useState([])
@@ -42,7 +43,7 @@ function Home(props) {
     const userSuggestions = async () => {
         const data = await getSuggestions()
         console.log(data);
-        setSuggestions(data)
+        setSuggestions(data.users)
         return data
     }
 
@@ -64,6 +65,7 @@ function Home(props) {
                     <div className='w-10/12 flex py-3 flex-col bg-white rounded-lg items-center justify-center'>
                         <img className='relative -top-16 rounded-full border-2 border-white w-32 h-32 object-cover' src={props.user.profile} alt="" />
                         <Link to={`/account/${props.user._id}`} className='relative text-black text-center text-2xl font-bold'>{props.user.fullname}</Link>
+                        <Link to={`/account/${props.user._id}`} className='relative text-black text-center text-lg font-light'>@{props.user.username}</Link>
                         <p className='text-black text-center text-sm w-8/12 my-4'>{props.user.bio}</p>
                         <div className='flex items-center justify-around w-full'>
                             <div className='flex flex-col items-center justify-center'>
@@ -158,7 +160,15 @@ export function CreatePostPopup({ user, setShowPostForm }) {
             setLoader(false)
             return
         }
-        
+        toast(data.message, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+        });
         setLoader(false)
         // setShowPostForm(false)
 
@@ -182,8 +192,8 @@ export function CreatePostPopup({ user, setShowPostForm }) {
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
-        if (file.size > 10000000) {
-            toast.error("Video must be less than 10MB", {
+        if (file.size > 12000000) {
+            toast.error("Video must be less than 12MB", {
                 position: "bottom-right",
                 autoClose: 5000,
                 hideProgressBar: false,
